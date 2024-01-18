@@ -12,9 +12,11 @@
         <RepositoryUrl>https://github.com/Minicon-eG/Minicon.GetMyInvoices.Client</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageReleaseNotes>Initial Import</PackageReleaseNotes>
+        
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Minicon.GetMyInvoices.Core" Version="1.0.0" />
       <PackageReference Include="Refit" Version="7.0.0" />
       <PackageReference Include="Refit.HttpClientFactory" Version="7.0.0" />
       <PackageReference Include="Refit.Newtonsoft.Json" Version="7.0.0" />
