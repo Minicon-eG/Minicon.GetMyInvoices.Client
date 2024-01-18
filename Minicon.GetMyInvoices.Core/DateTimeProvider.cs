@@ -1,4 +1,4 @@
-namespace Minicon.GetMyInvoices.Client;
+namespace Minicon.GetMyInvoices.Core;
 
 public sealed class DateTimeProvider : IDateTimeProvider
 {

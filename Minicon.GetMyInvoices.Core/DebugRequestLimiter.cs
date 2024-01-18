@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Minicon.GetMyInvoices.Client;
+namespace Minicon.GetMyInvoices.Core;
 
 public sealed class DebugRequestLimiter : IRequestLimiter
 {

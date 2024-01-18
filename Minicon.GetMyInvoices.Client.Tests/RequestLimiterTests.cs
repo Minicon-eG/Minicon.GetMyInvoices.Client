@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Minicon.GetMyInvoices.Client.Api;
+using Minicon.GetMyInvoices.Core;
 using Refit;
 
 namespace Minicon.GetMyInvoices.Client.Tests;
