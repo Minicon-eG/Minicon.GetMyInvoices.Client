@@ -4,6 +4,14 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>Minicon's GetMyInvoices client</Title>
+        <Description>Connect to GetMyInvoices.</Description>
+        <Copyright>Minicon eG</Copyright>
+        <PackageProjectUrl>https://github.com/Minicon-eG/Minicon.GetMyInvoices.Client</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Minicon-eG/Minicon.GetMyInvoices.Client</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageReleaseNotes>Initial Import</PackageReleaseNotes>
     </PropertyGroup>
 
     <ItemGroup>
