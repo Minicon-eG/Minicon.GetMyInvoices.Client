@@ -41,13 +41,13 @@ public sealed class RequestLimiter : IRequestLimiter
 		// Delete old requests sometimes
 		if (_dateTimeProvider.Now.Millisecond % 10 == 0)
 		{
-			Delete(_dateTimeProvider.Now.AddMinutes(-RequestPerMinute * 2));
+			Delete(_dateTimeProvider.Now.AddSeconds(-60 * 2));
 		}
 	}
 
 	public bool IsCurrentlyLimited(int requestCount = 1)
 	{
-		return Count(_dateTimeProvider.Now.AddSeconds(-RequestPerMinute+1)) + requestCount >= RequestPerMinute;
+		return Count(_dateTimeProvider.Now.AddSeconds(-60+1)) + requestCount >= RequestPerMinute;
 	}
 
 	public void Add()
