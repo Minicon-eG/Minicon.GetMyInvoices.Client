@@ -47,7 +47,7 @@ public sealed class RequestLimiter : IRequestLimiter
 
 	public bool IsCurrentlyLimited(int requestCount = 1)
 	{
-		return Count(_dateTimeProvider.Now.AddSeconds(-60+1)) + requestCount >= RequestPerMinute;
+		return Count(_dateTimeProvider.Now.AddSeconds(-61)) + requestCount >= RequestPerMinute;
 	}
 
 	public void Add()
