@@ -1,4 +1,4 @@
-/* 
+/*
  * GetMyInvoices API Documentation
  *
  * Documentation for GetMyInvoices API endpoints.
@@ -72,7 +72,7 @@ public sealed class GetDocumentMetaData : IEquatable<GetDocumentMetaData>
 		DocumentType = documentType;
 		DocumentNumber = documentNumber;
 		DocumentDate = documentDate;
-		DocumentDueDate = documentDueDate;
+		DocumentDueDate = documentDueDate.ToString();
 		NetAmount = netAmount;
 		Vat = vat;
 		TaxRates = taxRates;
@@ -153,9 +153,9 @@ public sealed class GetDocumentMetaData : IEquatable<GetDocumentMetaData>
 	/// </summary>
 	/// <value>Document Due Date</value>
 	[DataMember(Name = "documentDueDate", EmitDefaultValue = false)]
-	[JsonConverter(typeof(SwaggerDateConverter))]
-
-	public DateTime? DocumentDueDate { get; set; }
+	//[JsonConverter(typeof(SwaggerDateConverter))]
+	[JsonIgnore]
+	public string? DocumentDueDate { get; set; }
 
 	/// <summary>
 	///     Subtotal

@@ -13,7 +13,6 @@ public static class ServiceCollectionExtensions
 		services.AddSingleton<IRequestLimiter, RequestLimiter>();
 		services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 		services.AddTransient<RequestLimitDelegationHandler>();
-		services.AddTransient<RequestSlowingDelegationHandler>();
 		services.AddRefitClient<IDocumentApi>(new RefitSettings(new NewtonsoftJsonContentSerializer()))
 			.ConfigureHttpClient(
 				(serviceProvider, httpClient) =>

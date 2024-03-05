@@ -1,4 +1,4 @@
-/* 
+/*
  * GetMyInvoices API Documentation
  *
  * Documentation for GetMyInvoices API endpoints.
@@ -51,7 +51,7 @@ public sealed class ListDocumentsRecords : IEquatable<ListDocumentsRecords>
 	public ListDocumentsRecords(int? documentUid = default, DateTime createdAt = default, int? companyUid = default,
 		string companyName = default, string documentType = default, string documentNumber = default,
 		DateTime? documentDate = default, DateTime? documentDueDate = default, decimal? netAmount = default,
-		decimal? vat = default, List<int?> taxRates = default, decimal? grossAmount = default,
+		decimal? vat = default, List<decimal> taxRates = default, decimal? grossAmount = default,
 		string currency = default, bool? isArchived = default, bool? isLocked = default, int? isOcrCompleted = default,
 		List<string> tags = default, string note = default, string source = default, string filename = default,
 		string fileSize = default, string paymentStatus = default, int? supplierUid = default,
@@ -64,7 +64,7 @@ public sealed class ListDocumentsRecords : IEquatable<ListDocumentsRecords>
 		DocumentType = documentType;
 		DocumentNumber = documentNumber;
 		DocumentDate = documentDate;
-		DocumentDueDate = documentDueDate;
+		DocumentDueDate = documentDueDate.ToString();
 		NetAmount = netAmount;
 		Vat = vat;
 		TaxRates = taxRates;
@@ -140,8 +140,10 @@ public sealed class ListDocumentsRecords : IEquatable<ListDocumentsRecords>
 	/// </summary>
 	/// <value>Document Due Date</value>
 	[DataMember(Name = "documentDueDate", EmitDefaultValue = false)]
-	[JsonConverter(typeof(SwaggerDateConverter))]
-	public DateTime? DocumentDueDate { get; set; }
+	//[JsonConverter(typeof(SwaggerDateConverter))]
+	[JsonIgnore]
+
+	public string? DocumentDueDate { get; set; }
 
 	/// <summary>
 	///     Subtotal
@@ -162,7 +164,7 @@ public sealed class ListDocumentsRecords : IEquatable<ListDocumentsRecords>
 	/// </summary>
 	/// <value>Tax Rates</value>
 	[DataMember(Name = "taxRates", EmitDefaultValue = false)]
-	public List<int?> TaxRates { get; set; }
+	public List<decimal> TaxRates { get; set; }
 
 	/// <summary>
 	///     Total

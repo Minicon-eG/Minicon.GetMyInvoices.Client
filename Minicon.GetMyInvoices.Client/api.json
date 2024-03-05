@@ -1,0 +1,5645 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GetMyInvoices API Documentation",
+    "version": "v3",
+    "description": "Documentation for GetMyInvoices API endpoints.",
+    "contact": {
+      "name": "GetMyInvoices Support",
+      "email": "support@getmyinvoices.com",
+      "url": "www.getmyinvoices.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.getmyinvoices.com/accounts/v3",
+      "description": "GetMyInvoices API production server"
+    }
+  ],
+  "paths": {
+    "/apiStatus": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/apiStatus"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Check API status.",
+        "operationId": "API Status",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/companies": {
+      "get": {
+        "tags": ["Company"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/companies"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all companies from the account.",
+        "operationId": "Get company list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          },
+          {
+            "name": "statusFilter",
+            "in": "query",
+            "description": "Status filter. Possible values: 0 = Any, 1 = Active, -1 = Inactive, -2 = Pending",
+            "required": false,
+            "example": "0",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "companyTypeFilter",
+            "in": "query",
+            "description": "Company type filter. Possible values: 0 = Any, ONLINE_PORTAL = Online-Portal only, CUSTOM_COMPANY = Custom company only",
+            "required": false,
+            "example": "ONLINE_PORTAL",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "returnPortalRecords",
+            "in": "query",
+            "description": "Return portal records. Possible values: 0 = Not show portal records, 1 = Show portal records",
+            "required": false,
+            "example": "0",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Company"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/addCustomCompany"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Company name parameter not set. (Failure code: 114)\n * Company country parameter not set. (Failure code: 115)\n * Company name already exists. (Failure code: 116)\n * Company country not found. (Failure code: 117)\n * An unexpected error occurred while creating company. (Failure code: 118)\n * All OR One Required parameters not set. (Failure code: 119)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Add new custom company.",
+        "operationId": "Add Custom Company",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Name of the company.",
+                    "example": "Server4You",
+                    "type": "string"
+                  },
+                  "countryUid": {
+                    "description": "PRIM_UID of the country.",
+                    "example": 73,
+                    "type": "integer"
+                  },
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  },
+                  "street": {
+                    "description": "Street",
+                    "example": "Musterring 1",
+                    "type": "string"
+                  },
+                  "zip": {
+                    "description": "ZIP code",
+                    "example": "12456",
+                    "type": "string"
+                  },
+                  "city": {
+                    "description": "City",
+                    "example": "Musterhausen",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "Email",
+                    "example": "email@example.com",
+                    "type": "string"
+                  },
+                  "phone": {
+                    "description": "Phone",
+                    "example": "123456789",
+                    "type": "string"
+                  },
+                  "fax": {
+                    "description": "Fax",
+                    "example": "123456780",
+                    "type": "string"
+                  },
+                  "taxNumber": {
+                    "description": "Tax Number",
+                    "example": "XX-XXXXX",
+                    "type": "string"
+                  },
+                  "vatId": {
+                    "description": "VAT ID",
+                    "example": "DE999999999",
+                    "type": "string"
+                  },
+                  "commercialRegister": {
+                    "description": "Commercial Register",
+                    "example": "Berlin",
+                    "type": "string"
+                  },
+                  "iban": {
+                    "description": "IBAN",
+                    "example": "DE89370400440532013000",
+                    "type": "string"
+                  },
+                  "bic": {
+                    "description": "BIC",
+                    "example": "PBNKDEFF",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "URL",
+                    "example": "https://example.com",
+                    "type": "string"
+                  }
+                },
+                "required": ["name", "countryUid"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/companies/{companyUid}": {
+      "get": {
+        "tags": ["Company"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getCompany"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Required parameters not set. (Failure code: 102)\n * Invalid company Prim UID. (Failure code: 139)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get one company from the account.",
+        "operationId": "Get one company",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Company"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/updateCustomCompany"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Company PRIM UID parameter not set. (Failure code: 120)\n * Company name OR company country OR company Tags is not set. (Failure code: 121)\n * Company name already exists. (Failure code: 116)\n * Company country not found. (Failure code: 117)\n * Company is not custom company. (Failure code: 125)\n * Company not found. (Failure code: 131)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Update existing custom company.",
+        "operationId": "Update Custom Company",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Name of the company.",
+                    "example": "Server4You",
+                    "type": "string"
+                  },
+                  "countryUid": {
+                    "description": "PRIM_UID of the country.",
+                    "example": 73,
+                    "type": "integer"
+                  },
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  },
+                  "street": {
+                    "description": "Street",
+                    "example": "Musterring 1",
+                    "type": "string"
+                  },
+                  "zip": {
+                    "description": "ZIP code",
+                    "example": "12456",
+                    "type": "string"
+                  },
+                  "city": {
+                    "description": "City",
+                    "example": "Musterhausen",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "Email",
+                    "example": "email@example.com",
+                    "type": "string"
+                  },
+                  "phone": {
+                    "description": "Phone",
+                    "example": "123456789",
+                    "type": "string"
+                  },
+                  "fax": {
+                    "description": "Fax",
+                    "example": "123456780",
+                    "type": "string"
+                  },
+                  "taxNumber": {
+                    "description": "Tax Number",
+                    "example": "XX-XXXXX",
+                    "type": "string"
+                  },
+                  "vatId": {
+                    "description": "VAT ID",
+                    "example": "DE999999999",
+                    "type": "string"
+                  },
+                  "commercialRegister": {
+                    "description": "Commercial Register",
+                    "example": "Berlin",
+                    "type": "string"
+                  },
+                  "iban": {
+                    "description": "IBAN",
+                    "example": "DE89370400440532013000",
+                    "type": "string"
+                  },
+                  "bic": {
+                    "description": "BIC",
+                    "example": "PBNKDEFF",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "URL",
+                    "example": "https://example.com",
+                    "type": "string"
+                  }
+                },
+                "required": ["name", "country"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+          "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Company"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/deleteCustomCompany"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Company PRIM UID parameter not set. (Failure code: 120)\n * Company is not custom company. (Failure code: 125)\n * Company is having documents. (Failure code: 129)\n * Company is having email import rules defined. (Failure code: 130)\n * Company not found. (Failure code: 131)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete existing custom company.",
+        "operationId": "Delete Custom Company",
+        "parameters": [
+          {
+          "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/documents": {
+      "get": {
+        "tags": ["Document"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listDocuments"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Invalid Date Format. Must be in format Y-m-d. (Failure code: 104)\n * Invalid Date Format. Must be in format Y-m-d H:i:s. (Failure code: 140)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all documents from the account.",
+        "operationId": "Get document list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          },
+          {
+            "name": "companyFilter",
+            "in": "query",
+            "description": "Filter by company. Possible values: 0 = Any, -1 = unassigned or any companyUid from the /companies api response.",
+            "required": false,
+            "example": "0",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "archivedFilter",
+            "in": "query",
+            "description": "Filter archived documents. Possible values: 0 = Only not archived, 1 = Any, 2 = Only archived",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "documentTypeFilter",
+            "in": "query",
+            "description": "Document type. Possible values: INCOMING_INVOICE / RECEIPT / PAYMENT_RECEIPT / EXPENSE_REIMBURSEMENT / SALES_INVOICE / CREDIT_NOTE / STATEMENT / DELIVERY_NOTE / ORDER_CONFIRMATION / PAYROLL / COMPANY_REGISTRATION_DOCUMENT / MISC / TRAVEL_EXPENSES / REMINDER",
+            "required": false,
+            "example": "INCOMING_INVOICE",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "documentNumberFilter",
+            "in": "query",
+            "description": "Filter by document number.",
+            "required": false,
+            "example": "144-23232",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "noteFilter",
+            "in": "query",
+            "description": "Filter by note.",
+            "required": false,
+            "example": "Hosting",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDateFilter",
+            "in": "query",
+            "description": "Start document date filter",
+            "required": false,
+            "example": "2017-08-18",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDateFilter",
+            "in": "query",
+            "description": "End document date filter",
+            "required": false,
+            "example": "2027-08-18",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "documentUidExclusionFilter[]",
+            "in": "query",
+            "description": "Array of document Id that should not be in the results",
+            "required": false,
+            "example": ["28715", "28716"],
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "documentUidStartFilter",
+            "in": "query",
+            "description": "document Id that can be used to limit result to only higher prim_uids",
+            "required": false,
+            "example": "28714",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "updatedOrNewSinceFilter",
+            "in": "query",
+            "description": "Limit result to documents modified or created after given date.",
+            "required": false,
+            "example": "2027-08-18 18:12:50",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tagFilter[]",
+            "in": "query",
+            "description": "Filter by tag name.",
+            "required": false,
+            "example": ["img", "select"],
+            "schema": {
+              "type": "array"
+            }
+          },
+          {
+            "name": "paymentStatusFilter",
+            "in": "query",
+            "description": "Filter by payment status. \n Possible values:  paid / not_paid / unknown / all",
+            "required": false,
+            "example": "paid",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "description": "If there are more documents than the 500 limit you can use this to get additional pages",
+            "required": false,
+            "example": "1",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Document"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/uploadNewDocument"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * File type not supported. (Failure code: 101)\n * Required parameters not set. (Failure code: 102)\n * file_content: Wrong encoding. Must be base64 encoding. (Failure code: 103)\n * Hourly upload limit of 100 documents reached. (Failure code: 105)\n * Document already exists in account. (Failure code: 127)\n * Net amount must be numeric. (Failure code: 107)\n * Gross amount must be numeric. (Failure code: 108)\n * VAT must be numeric. (Failure code: 109)\n * VAT must be positive value. (Failure code: 110)\n * Invalid Date Format. Must be in format Y-m-d. (Failure code: 104)\n * Invalid payment status. (Failure code: 112)\n * Invalid company. (Failure code: 113)\n * Virus check failed. (Failure code: 132)\n * Invalid Due Date Format. Must be in format Y-m-d.. (Failure code: 137)\n * Invalid payment method. (Failure code: 138)\n * Invalid document type. (Failure code: 146)\n * File content or file url must be set. (Failure code: 141)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Upload a new document to the account. Supported file types: pdf, eml",
+        "operationId": "Upload new document",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "description": "Name of the file with extension",
+                    "example": "document-2525.pdf",
+                    "type": "string"
+                  },
+                  "fileContent": {
+                    "description": "File content; base64 encoded",
+                    "example": "/* base64 encoded file content */",
+                    "type": "string"
+                  },
+                  "companyId": {
+                    "description": "ID of company from <a href='#companies' target='_blank'>/companies</a>",
+                    "example": 1234,
+                    "type": "integer"
+                  },
+                  "documentType": {
+                    "description": "Document type. Possible values: INCOMING_INVOICE / RECEIPT / PAYMENT_RECEIPT / EXPENSE_REIMBURSEMENT / SALES_INVOICE / CREDIT_NOTE / STATEMENT / DELIVERY_NOTE / ORDER_CONFIRMATION / PAYROLL / COMPANY_REGISTRATION_DOCUMENT / MISC / TRAVEL_EXPENSES / REMINDER",
+                    "example": "INCOMING_INVOICE",
+                    "type": "string"
+                  },
+                  "documentNumber": {
+                    "description": "Document number",
+                    "example": "INV-1234",
+                    "type": "string"
+                  },
+                  "documentDate": {
+                    "description": "Document date (format: Y-m-d)",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "documentDueDate": {
+                    "description": "Document due date (format: Y-m-d)",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "paymentMethod": {
+                    "description": "Document Payment Method. Possible values: bank_transfer, cash, check, direct_debit, credit, cc, paypal, online_payment, amazon_pay, apple_pay, google_pay, external_receivables_management, cashbox, offsetting, other",
+                    "example": "bank_transfer",
+                    "type": "string"
+                  },
+                  "paymentStatus": {
+                    "description": "Document Payment Status. Possible values: Unknown, Paid, Partially, Not paid",
+                    "example": "Paid",
+                    "type": "string"
+                  },
+                  "paidAt": {
+                    "description": "Paid at date (format: Y-m-d), When payment_status = 'Paid'",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "netAmount": {
+                    "description": "Net amount",
+                    "example": "2000.00",
+                    "type": "string"
+                  },
+                  "grossAmount": {
+                    "description": "Gross amount",
+                    "example": "3000.00",
+                    "type": "string"
+                  },
+                  "currency": {
+                    "description": "Currency",
+                    "example": "EUR",
+                    "type": "string"
+                  },
+                  "vat": {
+                    "description": "VAT percentage. Array can be used for multiple tax rates. <br/> Note: It will be deprecated soon. Either vat or taxRates can be used",
+                    "example": 19,
+                    "type": "integer or array"
+                  },
+                  "taxRates": {
+                    "description": "Tax Rates (Array)",
+                    "example": [0, 1, 2],
+                    "type": "array"
+                  },
+                  "cashDiscountDate": {
+                    "description": "Cash Discount date (format: Y-m-d)",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "cashDiscountValue": {
+                    "description": "Cash Discount value",
+                    "example": "8.00",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  },
+                  "note": {
+                    "description": "Note",
+                    "example": "Document is for hosting.",
+                    "type": "string"
+                  },
+                  "lineItems": {
+                    "description": "Line Items",
+                    "example": [
+                      {
+                        "description": "HDD 4TB",
+                        "quantity": 1,
+                        "unit_net_price": 200.0,
+                        "tax_percentage": 19.0,
+                        "total_gross": 219.0
+                      },
+                      {
+                        "description": "Keyboard",
+                        "quantity": 1,
+                        "unit_net_price": 400.0,
+                        "tax_percentage": 19.0,
+                        "total_gross": 419.0
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  "runOCR": {
+                    "description": "Use integrated OCR to fill optional params automatically",
+                    "example": false,
+                    "type": "boolean"
+                  }
+                },
+                "required": ["fileName", "documentType","fileContent"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/documents/exists": {
+      "post": {
+        "tags": ["Document"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/documentsExists"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Required Data Missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Check document hash is not deleted and belongs to the account from user",
+        "operationId": "Check document Hash",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "fileHash": {
+                        "description": "File Hash",
+                        "example": "bdbdbhgvjhbchcvgvkhcbgvcv",
+                        "type": "string"
+                      }
+                    },
+                    "required": ["fileHash"]
+                  },
+                  {
+                    "properties": {
+                      "fileContent": {
+                        "description": "File content; base64 encoded",
+                        "example": "/* base64 encoded file content */",
+                        "type": "string"
+                      }
+                    },
+                    "required": ["fileContent"]
+                  }
+                ]
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/documents/{documentUid}": {
+      "get": {
+        "tags": ["Document"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getDocument"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Required parameters not set. (Failure code: 102)\n * Invalid Document Prim UID. (Failure code: 106)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get one document from the account.",
+        "operationId": "Get one document",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          },
+          {
+            "name": "loadLineItems",
+            "in": "query",
+            "description": "Set to true if you want to receive line items as well .",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "readableText",
+            "in": "query",
+            "description": "Set to true if you want to receive readable text from document.",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "includeDocument",
+            "in": "query",
+            "description": "Set to false if you want only basic data without the document content.",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "transactions",
+            "in": "query",
+            "description": "Set to false if you want only basic data without the connected transactions.",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "documentApproval",
+            "in": "query",
+            "description": "Set to false if you want only basic data without the connected workflow approval.",
+            "required": false,
+            "example": "true",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ]
+      },
+      "put": {
+        "tags": ["Document"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/updateDocument"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Net amount must be numeric. (Failure code: 107)\n * Gross amount must be numeric. (Failure code: 108)\n * VAT must be numeric. (Failure code: 109)\n * VAT must be positive value. (Failure code: 110)\n * Invalid Date Format. Must be in format Y-m-d. (Failure code: 104)\n * Invalid payment status. (Failure code: 112)\n * Invalid company. (Failure code: 113)\n * Invalid Is Archived, must be either 1 or 0. (Failure code: 133)\n * Document ID must be numeric. (Failure code: 134)\n * Invalid Document. (Failure code: 135)\n * No input meta data found to update. (Failure code: 136)\n * Invalid Due Date Format. Must be in format Y-m-d.. (Failure code: 137)\n * Invalid payment method. (Failure code: 138)\n * Invalid document type. (Failure code: 146)\n * Document is locked. (Failure code: 147)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Update metadata of existing document in the account.",
+        "operationId": "Update document",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "ID of company from <a href='#companies' target='_blank'>/companies</a>",
+                    "example": 1234,
+                    "type": "integer"
+                  },
+                  "documentType": {
+                    "description": "Document type. Possible values: INCOMING_INVOICE / RECEIPT / PAYMENT_RECEIPT / EXPENSE_REIMBURSEMENT / SALES_INVOICE / CREDIT_NOTE / STATEMENT / DELIVERY_NOTE / ORDER_CONFIRMATION / PAYROLL / COMPANY_REGISTRATION_DOCUMENT / MISC / TRAVEL_EXPENSES / REMINDER",
+                    "example": "INCOMING_INVOICE",
+                    "type": "string"
+                  },
+                  "documentNumber": {
+                    "description": "Document number",
+                    "example": "INV-1234",
+                    "type": "string"
+                  },
+                  "documentDate": {
+                    "description": "Document date (format: Y-m-d)",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "documentDueDate": {
+                    "description": "Document due date (format: Y-m-d)",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "paymentMethod": {
+                    "description": "Document Payment Method. Possible values: bank_transfer, cash,check, direct_debit, credit, cc, paypal, online_payment, amazon_pay, apple_pay, google_pay, external_receivables_management, cashbox, offsetting, other",
+                    "example": "bank_transfer",
+                    "type": "string"
+                  },
+                  "paymentStatus": {
+                    "description": "Document Payment Status. Possible values: Unknown, Paid, Partially, Not paid",
+                    "example": "Paid",
+                    "type": "string"
+                  },
+                  "paidAt": {
+                    "description": "Paid at date (format: Y-m-d), When payment_status = 'Paid'",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "netAmount": {
+                    "description": "Net amount",
+                    "example": "2000.00",
+                    "type": "string"
+                  },
+                  "grossAmount": {
+                    "description": "Gross amount",
+                    "example": "3000.00",
+                    "type": "string"
+                  },
+                  "currency": {
+                    "description": "Currency",
+                    "example": "EUR",
+                    "type": "string"
+                  },
+                  "vat": {
+                    "description": "VAT percentage <br/> Note: It will be deprecated soon. Either vat or taxRates can be used.",
+                    "example": 19,
+                    "type": "integer"
+                  },
+                  "taxRates": {
+                    "description": "Tax Rates (Array)",
+                    "example": [0, 1, 2],
+                    "type": "array"
+                  },
+                  "cashDiscountDate": {
+                    "description": "Cash Discount date (format: Y-m-d)",
+                    "example": "2017-08-18",
+                    "type": "string"
+                  },
+                  "cashDiscountValue": {
+                    "description": "Cash Discount value",
+                    "example": "8.00",
+                    "type": "string"
+                  },
+                  "isArchived": {
+                    "description": "Is Archived?",
+                    "example": 1,
+                    "type": "integer"
+                  },
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  },
+                  "note": {
+                    "description": "Note",
+                    "example": "Document is for hosting.",
+                    "type": "string"
+                  },
+                  "lineItems": {
+                    "description": "Line Items",
+                    "example": [
+                      {
+                        "description": "HDD 4TB",
+                        "quantity": 1,
+                        "unit_net_price": 200.0,
+                        "tax_percentage": 19.0,
+                        "total_gross": 219.0
+                      },
+                      {
+                        "description": "Keyboard",
+                        "quantity": 1,
+                        "unit_net_price": 400.0,
+                        "tax_percentage": 19.0,
+                        "total_gross": 419.0
+                      }
+                    ],
+                    "type": "array"
+                  }
+                },
+                "required": []
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Document"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/deleteDocument"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Net amount must be numeric. (Failure code: 107)\n * Gross amount must be numeric. (Failure code: 108)\n * VAT must be numeric. (Failure code: 109)\n * VAT must be positive value. (Failure code: 110)\n * Invalid Date Format. Must be in format Y-m-d. (Failure code: 104)\n * Invalid payment status. (Failure code: 112)\n * Invalid company. (Failure code: 113)\n * Invalid Is Archived, must be either 1 or 0. (Failure code: 133)\n * Document ID must be numeric. (Failure code: 134)\n * Invalid Document. (Failure code: 135)\n * No input meta data found to update. (Failure code: 136)\n * Invalid Due Date Format. Must be in format Y-m-d.. (Failure code: 137)\n * Invalid payment method. (Failure code: 138)\n * Invalid document type. (Failure code: 146)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete an existing document in the account.",
+        "operationId": "Delete document",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/account": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/account"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all available countries.",
+        "operationId": "Account",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/countries": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getCountries"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all available countries.",
+        "operationId": "Get country list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/currencies": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getCurrencies"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all available currencies.",
+        "operationId": "Get currency list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/tags": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getTags"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all available Tags in GMI user.",
+        "operationId": "Get Tag list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/vatRates": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getVatRates"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all vat rates from the account.",
+        "operationId": "Get vat rates",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/documents/{documentUid}/attachments": {
+      "get": {
+        "tags": ["Attachment"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listAttachments"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get list of all attachments for an invoice.",
+        "operationId": "Get attachment list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Attachment"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/uploadAttachment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * Required parameters not set (Failure code: 102)\n * You can upload maximum 25 attachments per invoice (Failure code: 141)\n * Invalid file type. Allowed types are 'pdf, xls, xlsx, doc, docx, ppt, pptx, txt, zip, xml, jpg, jpeg, png, tif, tiff, eml' (Failure code: 142)\n * Attachment detected as virus (Failure code: 143)\n * Attachment already exists in invoice (Failure code: 144)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "Required parameters not set.",
+                    "error_code": 102
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Upload a single attachment to invoice.",
+        "operationId": "Upload one Attachment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "description": "Name of the file with extension",
+                    "example": "document1.pdf",
+                    "type": "string"
+                  },
+                  "fileContent": {
+                    "description": "File content; base64 encoded",
+                    "example": "/* base64 encoded file content */",
+                    "type": "string"
+                  }
+                },
+                "required": ["fileName", "fileContent"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/documents/{documentUid}/attachments/{attachmentUid}": {
+      "get": {
+        "tags": ["Attachment"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/getAttachment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Required parameters not set. (Failure code: 102)\n * Invalid Document Prim UID. (Failure code: 106)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get specific attachments for an invoice.",
+        "operationId": "Get one attachment",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Attachment"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/deleteAttachment"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * Required parameters not set (Failure code: 102)\n * Temporary Issue. Please retry in a few minutes (Failure code: 503)\n * Attachment not found (Failure code: 145)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "Required parameters not set.",
+                    "error_code": 102
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete a specific attachment.",
+        "operationId": "Delete one attachment",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/bankAccounts": {
+      "get": {
+        "tags": ["Bank Account"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listBankAccounts"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * Required parameters not set (Failure code: 102)\n * An unexpected error occurred. (Failure code: 100) \n * Account not found (Failure code: 145)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "Required parameters not set.",
+                    "error_code": 102
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "List Bank Accounts.",
+        "operationId": "List Bank Accounts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "return result set from limit to offset",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of accounts set",
+            "required": false,
+            "example": "20",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/bankAccounts/{bankAccountUid}": {
+      "put": {
+        "tags": ["Bank Account"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/updateBankAccountBalance"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * Required parameters not set (Failure code: 102)\n * An unexpected error occurred. (Failure code: 100) \n * Account not found (Failure code: 145)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Update Bank Account Balance",
+        "operationId": "Update Bank Account Balance",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "balance": {
+                    "description": "New Balance",
+                    "example": 320.76,
+                    "type": "number"
+                  },
+                  "currencyCode": {
+                    "description": "Currency Code",
+                    "example": "EUR",
+                    "type": "string"
+                  }
+                },
+                "required": ["balance"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/bankAccounts/{bankAccountUid}/transactions": {
+      "get": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listTransactions"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)  \n * Bank Account not found (Failure code: 145)  \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "Required parameters not set.",
+                    "error_code": 102
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "List Transaction.",
+        "operationId": "List Transaction",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          },
+          {
+            "name": "startDateFilter",
+            "in": "query",
+            "description": "Start date.",
+            "required": false,
+            "example": "2019-05-12",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDateFilter",
+            "in": "query",
+            "description": "End date.",
+            "required": false,
+            "example": "2019-05-12",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "textFilter",
+            "in": "query",
+            "description": "search string.",
+            "required": false,
+            "example": "test",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statusFilter",
+            "in": "query",
+            "description": "search status.",
+            "required": false,
+            "example": "test",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "return result set from limit to offset",
+            "required": false,
+            "example": "10",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of transactions set",
+            "required": false,
+            "example": "20",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "post": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/createTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Transaction Record Already Exists. (Failure code: 127) \n * Bank Account not found (Failure code: 145) \n * Invalid Bank Account Type (Failure code: 114) \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Add new Transaction.",
+        "operationId": "Create a Transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bookingDate": {
+                    "description": "Date of booking.",
+                    "example": "2019-08-29",
+                    "type": "date"
+                  },
+                  "valueDate": {
+                    "description": "Value Date.",
+                    "example": "2019-08-29",
+                    "type": "date"
+                  },
+                  "transactionType": {
+                    "description": "Transaction type",
+                    "example": "Lastschrift",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Description",
+                    "example": "test description",
+                    "type": "string"
+                  },
+                  "amount": {
+                    "description": "Amount",
+                    "example": 100.76,
+                    "type": "float"
+                  },
+                  "currencyCode": {
+                    "description": "Currency Code",
+                    "example": "EUR",
+                    "type": "string"
+                  },
+                  "clientAccount": {
+                    "description": "Phone",
+                    "example": "123456789",
+                    "type": "string"
+                  },
+                  "clientBankCode": {
+                    "description": "Bank Code",
+                    "example": "XXXXXXXX",
+                    "type": "string"
+                  },
+                  "clientIban": {
+                    "description": "IBAN",
+                    "example": "XXXXXXXXXXXXXXX",
+                    "type": "string"
+                  },
+                  "creditorId": {
+                    "description": "Creditor ID",
+                    "example": "XXXXXXXXXXXXXXX",
+                    "type": "string"
+                  },
+                  "paymentPartnerName": {
+                    "description": "Payment Partner Name",
+                    "example": "XXXXXXXXXXXXXXX",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "valueDate",
+                  "bookingDate",
+                  "description",
+                  "amount"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+          "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/bankAccounts/{bankAccountUid}/transactions/{transactionUid}": {
+      "put": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/updateTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Transaction Record not found (Failure code: 107) \n * Bank Account not found (Failure code: 145) \n * Invalid Bank Account Type (Failure code: 114) \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Update Transaction.",
+        "operationId": "Update Transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "bookingDate": {
+                    "description": "Date of booking.",
+                    "example": "2019-08-29",
+                    "type": "date"
+                  },
+                  "valueDate": {
+                    "description": "Value Date.",
+                    "example": "2019-08-29",
+                    "type": "date"
+                  },
+                  "transactionType": {
+                    "description": "Transaction type",
+                    "example": "Lastschrift",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "Description",
+                    "example": "test description",
+                    "type": "string"
+                  },
+                  "amount": {
+                    "description": "Amount",
+                    "example": 100.56,
+                    "type": "float"
+                  },
+                  "currencyCode": {
+                    "description": "Currency Code",
+                    "example": "EUR",
+                    "type": "string"
+                  },
+                  "clientAccount": {
+                    "description": "Phone",
+                    "example": "123456789",
+                    "type": "string"
+                  },
+                  "clientBankCode": {
+                    "description": "Bank Code",
+                    "example": "XXXXXXXX",
+                    "type": "string"
+                  },
+                  "clientIban": {
+                    "description": "IBAN",
+                    "example": "XXXXXXXXXXXXXXX",
+                    "type": "string"
+                  },
+                  "creditorId": {
+                    "description": "Creditor ID",
+                    "example": "XXXXXXXXXXXXXXX",
+                    "type": "string"
+                  },
+                  "paymentPartnerName": {
+                    "description": "Payment Partner Name",
+                    "example": "XXXXXXXXXXXXXXX",
+                    "type": "string"
+                  },
+                  "status": {
+                    "description": "Status",
+                    "example": "UNKNOWN",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  }
+                },
+                "required": []
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+          "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      },
+      "delete": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/deleteTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Transaction Record not found (Failure code: 107) \n * Bank Account not found (Failure code: 145) \n * Invalid Bank Account Type (Failure code: 114) \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Delete Transaction.",
+        "operationId": "Delete Transaction",
+        "parameters": [
+          {
+          "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/bankAccounts/{bankAccountUid}/transactions/{transactionUid}/tags": {
+      "put": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/setTransactionTags"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100) \n * Transaction Record not found (Failure code: 107) \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Set Transaction`s Tags",
+        "operationId": "Set Transaction`s Tags",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tags": {
+                    "description": "Tags (Array)",
+                    "example": ["Hosting", "Software"],
+                    "type": "array"
+                  }
+                },
+                "required": ["tags"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/bankAccounts/{bankAccountUid}/transactions/{transactionUid}/assign": {
+      "post": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/assignTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)  \n * Bank Account not found (Failure code: 145) \n * Transaction Record not found (Failure code: 107) \n * Document Already Assigned (Failure code: 108)  \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Assign Document to Transaction.",
+        "operationId": "Assign Transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "documentUid": {
+                    "description": "PRIM_UID of the document.",
+                    "example": 28715,
+                    "type": "integer"
+                  }
+                },
+                "required": ["documentUid"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/bankAccounts/{bankAccountUid}/transactions/{transactionUid}/ignore": {
+      "post": {
+        "tags": ["Bank Account Transaction"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/ignoreTransaction"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)  \n * Bank Account not found (Failure code: 145) \n * Transaction Record not found (Failure code: 107) \n * Document Already Assigned (Failure code: 108)  \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Set transaction status to ignore or unknown.",
+        "operationId": "Ignore Transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ignore": {
+                    "description": "status of transaction.",
+                    "example": true,
+                    "type": "boolean"
+                  },
+                  "ignoreComment": {
+                    "description": "Ignore comment of transaction.",
+                    "example": "Ignore comment",
+                    "type": "string"
+                  }
+                },
+                "required": ["ignore"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/submitTicket": {
+      "post": {
+        "tags": ["Submit Tickets"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "example": true,
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)  \n * Bank Account not found (Failure code: 145) \n * Transaction Record not found (Failure code: 107) \n * Document Already Assigned (Failure code: 108)  \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Submit a support ticket with the provided information.t",
+        "operationId": "Submit Ticket",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "description": "Description of the issue",
+                    "example": "string",
+                    "type": "string"
+                  },
+                  "pluginType": {
+                    "description": "Type of plugin",
+                    "example": "string",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "Email address for communication",
+                    "example": "string",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Name of the user",
+                    "example": "string",
+                    "type": "string"
+                  },
+                  "connection": {
+                    "description": "Connection details",
+                    "example": "string",
+                    "type": "string"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "example": [{"name":"string","fileContent":"File content; base64 encoded"}],
+                    "description": "Array of name and fileContent (base64 encoded)"
+                  },
+                  "credential": {
+                    "type": "object",
+                    "example": {"username":"string","password":""},
+                    "description": "Credential details if provided"
+                  }
+                },
+                "required": ["description", "pluginType", "email"]
+              }
+            }
+          },
+          "required": true
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/portals": {
+      "get": {
+        "tags": ["General Endpoints"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listPortals"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)  \n * Bank Account not found (Failure code: 145) \n * Transaction Record not found (Failure code: 107) \n * Document Already Assigned (Failure code: 108)  \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "List of all portals.",
+        "operationId": "List Portals",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    },
+    "/getRelatedAccounts": {
+      "get": {
+        "tags": ["Related Accounts"],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/listRelatedAccounts"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Either request does not have any valid required parameters or invalid action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Invalid API key. Will validate API key for:\n * Key exists (code: 403)\n * Key is blocked or not (code: 407)\n * Daily limit is exceeded (code: 429)\n * Requests per minute limit is exceeded (code: 429)\n * You do not have required permission (code: 430)\n * Account is cancelled (code: 431)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {}
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Request content-type is not valid, should be application/json.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 415,
+                    "detail": "Request content-type is not valid."
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request could not be processed. Details will be provided within the response which also contains an unique error code for this API call.\n \n Possible failures:\n * An unexpected error occurred. (Failure code: 100)  \n * Bank Account not found (Failure code: 145) \n * Transaction Record not found (Failure code: 107) \n * Document Already Assigned (Failure code: 108)  \n * All OR One Required parameters not set. (Failure code: 102)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "detail": "An unexpected error occurred.",
+                    "error_code": 100
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary Issue. Please retry in a few minutes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 503,
+                    "detail": "Temporary Issue. Please retry in a few minutes."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get All Related Accounts.",
+        "operationId": "Get Related Accounts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/X-Application-Header"
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Overview",
+      "description": "GetMyInvoices API grants access to the account data from GetMyInvoices. It allows to query companies, list documents, get documents and upload documents. All access is restricted by API Key.\n\n Content-Type of all request should be application/json. \n\n Parameters can be placed in request body, but also it can be placed in request url as query format. \n "
+    },
+    {
+      "name": "SDK",
+      "description": "You can also see our official SDK for details how to use the API.<ul><li><b>PHP:</b> <a href='https://github.com/getmyinvoices/accounts-api-php' target='_blank'>https://github.com/getmyinvoices/accounts-api-php</a></li></ul>"
+    },
+    {
+      "name": "Sample code",
+      "description": "```php \n SAMPLE PHP CODE \n \n ================================  \n \n // Request parameters can be placed in request body \n \n $data_string = json_encode(array( \n   'statusFilter' => 0, \n   'companyTypeFilter' => 'ONLINE_PORTAL'   \n )); \n \n $ch = curl_init('https://api.getmyinvoices.com/accounts/v3/companies'); \n curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string); \n curl_setopt($ch, CURLOPT_HEADER, 0); \n curl_setopt($ch, CURLOPT_HTTPHEADER, array( \n   'Content-Type: application/json', \n   'Content-Length: '.strlen($data_string), \n   'X-API-KEY: XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX') \n ); \n curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET'); \n curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); \n curl_setopt($ch, CURLOPT_TIMEOUT, 120); \n curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true); \n curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true); \n $return_data = curl_exec($ch); \n curl_close($ch); \n \n \n // Request parameters can be placed in request url as query format instead of using request body \n \n $ch = curl_init('https://api.getmyinvoices.com/accounts/v3/companies?statusFilter=0&companyTypeFilter=ONLINE_PORTAL'); \n curl_setopt($ch, CURLOPT_HEADER, 0); \n curl_setopt($ch, CURLOPT_HTTPHEADER, array( \n   'Content-Type: application/json', \n   'X-API-KEY: XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX') \n ); \n curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET'); \n curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); \n curl_setopt($ch, CURLOPT_TIMEOUT, 120); \n curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, true); \n curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true); \n $return_data = curl_exec($ch); \n curl_close($ch); \n // Multiple array values are allowed in this format \n $ch = curl_init('https://api.getmyinvoices.com/accounts/v3/documents/?tagFilter[]=img&tagFilter[]=select'); \n \n \n // Return data will have a json data like  \n\n [{ \n    'companyUid': 30746, \n    'name': '1&1.de', \n    'companyType': 'ONLINE_PORTAL' \n    'note': 'Online-Portal', \n    'tags': ['Internet', 'DSL', 'VoIP'], \n    'supplierUid': 307  \n }] \n ```"
+    },
+    {
+      "name": "General Pointers",
+      "description": "<ul><li><b>HTTPS only:</b> All requests are done over HTTPS.</li><li><b>UTF-8 encoding:</b> All strings are sent and received in UTF-8.</li><li><b>JSON in, JSON out:</b> Data is sent and received as JSON (although some endpoints might return binary documents).</li><li><b>Schemas:</b> We're using the JSON schema format to document the endpoints.</li><li><b>ISO Date format:</b> Dates are in ISO 8601 format: 2013-07-18</li><li><b>API Call Limit:</b> 2500 API calls/day and 100 API calls/minute</li></ul>"
+    },
+    {
+      "name": "General Endpoints"
+    },
+    {
+      "name": "Company"
+    },
+    {
+      "name": "Document"
+    },
+    {
+      "name": "Attachment"
+    },
+    {
+      "name": "Bank Account"
+    },
+    {
+      "name": "Bank Account Transaction"
+    },
+    {
+      "name": "Submit Tickets"
+    },
+    {
+      "name": "Related Accounts"
+    }
+  ],
+  "definitions": {
+    "apiStatus": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        }
+      }
+    },
+    "companies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "companyUid": {
+            "type": "integer",
+            "example": 307,
+            "description": "Unique ID"
+          },
+          "name": {
+            "type": "string",
+            "example": "1&1.de",
+            "description": "Company Name"
+          },
+          "companyType": {
+            "type": "string",
+            "example": "ONLINE_PORTAL",
+            "description": "Company Type"
+          },
+          "note": {
+            "type": "string",
+            "example": "Online-Portal",
+            "description": "Company Note"
+          },
+          "tags": {
+            "type": "array",
+            "example": ["Internet", "DSL", "VoIP"],
+            "description": "Company Tags"
+          },
+          "supplierUid": {
+            "type": "integer",
+            "example": 307,
+            "description": "Supplier UID"
+          },
+          "countryUid": {
+            "type": "integer",
+            "example": 76,
+            "description": "Country UID"
+          },
+          "countryCode": {
+            "type": "string",
+            "example": "DE",
+            "description": "Country Code"
+          },
+          "portalRecords": {
+            "type": "array",
+            "example": [
+              {
+                "uid": "123456",
+                "name": "portal1@getmyinvoices.com"
+              },
+              {
+                "uid": "654321",
+                "name": "portal2@getmyinvoices.com"
+              }
+            ],
+            "description": "Portal Records"
+          }
+        }
+      }
+    },
+    "submitTicket": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "string",
+            "description": "description"
+          },
+          "pluginType": {
+            "type": "string",
+            "example": "string",
+            "description": "Type of plugin"
+          },
+          "email": {
+            "type": "string",
+            "example": "abc@abc.com",
+            "description": "Email address for communication"
+          },
+          "name": {
+            "type": "string",
+            "example": "string",
+            "description": "Company Note"
+          },
+          "connection": {
+            "type": "string",
+            "example": "string",
+            "description": "Connection details"
+          },
+          "attachments": {
+            "type": "array",
+            "example": [{"name":"string","fileContent":"File content; base64 encoded"}],
+            "description": "Array of name and fileContent (base64 encoded)"
+          }
+        }
+      }
+    },
+    "getCompany": {
+      "type": "object",
+      "properties": {
+        "companyUid": {
+          "type": "integer",
+          "example": 307,
+          "description": "Unique ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "1&1.de",
+          "description": "Company Name"
+        },
+        "companyType": {
+          "type": "string",
+          "example": "CUSTOM_COMPANY",
+          "description": "Company Type"
+        },
+        "note": {
+          "type": "string",
+          "example": "",
+          "description": "Note"
+        },
+        "tags": {
+          "type": "array",
+          "example": [],
+          "description": "Tags"
+        },
+        "street": {
+          "type": "string",
+          "example": "",
+          "description": "Street"
+        },
+        "zip": {
+          "type": "string",
+          "example": "",
+          "description": "Zip"
+        },
+        "country": {
+          "type": "string",
+          "example": "",
+          "description": "Country"
+        },
+        "city": {
+          "type": "string",
+          "example": "",
+          "description": "City"
+        },
+        "email": {
+          "type": "string",
+          "example": "",
+          "description": "Email"
+        },
+        "phone": {
+          "type": "string",
+          "example": "",
+          "description": "Phone"
+        },
+        "fax": {
+          "type": "string",
+          "example": "",
+          "description": "Fax"
+        },
+        "taxNumber": {
+          "type": "string",
+          "example": "",
+          "description": "Tax Number"
+        },
+        "vatId": {
+          "type": "string",
+          "example": "",
+          "description": "Vat Id"
+        },
+        "commercialRegister": {
+          "type": "string",
+          "example": "",
+          "description": "Commercial Register"
+        },
+        "iban": {
+          "type": "string",
+          "example": "",
+          "description": "IBAN"
+        },
+        "bic": {
+          "type": "string",
+          "example": "",
+          "description": "BIC"
+        },
+        "url": {
+          "type": "string",
+          "example": "http://1und1.de",
+          "description": "Url"
+        },
+        "supplierUid": {
+          "type": "integer",
+          "example": 307,
+          "description": "Supplier UID"
+        }
+      }
+    },
+    "listDocuments": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "type": "integer",
+          "example": 1000,
+          "description": "Total Count"
+        },
+        "maxAmount": {
+          "type": "integer",
+          "example": 1000,
+          "description": "Max Amount"
+        },
+        "offset": {
+          "type": "integer",
+          "example": 500,
+          "description": "Offset"
+        },
+        "records": {
+          "type": "object",
+          "properties": {
+            "documentUid": {
+              "type": "integer",
+              "example": 28715,
+              "description": "Unique ID"
+            },
+            "createdAt": {
+              "type": "date",
+              "example": "2017-08-17",
+              "description": "Created Date"
+            },
+            "companyUid": {
+              "type": "integer",
+              "example": 307,
+              "description": "Company Unique ID"
+            },
+            "companyName": {
+              "type": "string",
+              "example": "1&1.de",
+              "description": "Company Name"
+            },
+            "orderNumber": {
+              "type": "string",
+              "example": "1235ABCD",
+              "description": "Order Number"
+            },
+            "documentType": {
+              "type": "string",
+              "example": "INCOMING_INVOICE",
+              "description": "Document Type"
+            },
+            "documentNumber": {
+              "type": "string",
+              "example": "receipt-1708171523",
+              "description": "Document Number"
+            },
+            "documentDate": {
+              "type": "date",
+              "example": "2017-08-17",
+              "description": "Document Date"
+            },
+            "documentDueDate": {
+              "type": "string",
+              "example": "2017-08-17",
+              "description": "Document Due Date"
+            },
+            "netAmount": {
+              "type": "number",
+              "format": "float",
+              "example": 25.0,
+              "description": "Subtotal"
+            },
+            "vat": {
+              "type": "number",
+              "format": "float",
+              "example": 5.0,
+              "description": "Vat"
+            },
+            "vat_id": {
+              "type": "number",
+              "format": "integer",
+              "example": 123456789,
+              "description": "VAT ID"
+            },
+            "taxRates": {
+              "type": "array",
+              "example": [19, 21],
+              "description": "Tax Rates"
+            },
+            "grossAmount": {
+              "type": "number",
+              "format": "float",
+              "example": 30.0,
+              "description": "Total"
+            },
+            "currency": {
+              "type": "string",
+              "example": "EUR",
+              "description": "Currency"
+            },
+            "isArchived": {
+              "type": "boolean",
+              "example": true,
+              "description": "Is Archived"
+            },
+            "isLocked": {
+              "type": "boolean",
+              "example": true,
+              "description": "Is Locked"
+            },
+            "isOcrCompleted": {
+              "type": "integer",
+              "example": 0,
+              "description": "Is OCR Completed"
+            },
+            "tags": {
+              "type": "array",
+              "example": ["Hosting", "Marketing", "Software"],
+              "description": "Tags"
+            },
+            "note": {
+              "type": "string",
+              "example": "",
+              "description": "Note"
+            },
+            "source": {
+              "type": "string",
+              "example": "Manual",
+              "description": "Source"
+            },
+            "filename": {
+              "type": "string",
+              "example": "receipt-1708171523.pdf",
+              "description": "Filename"
+            },
+            "fileSize": {
+              "type": "string",
+              "example": "136.75",
+              "description": "File Size"
+            },
+            "paymentStatus": {
+              "type": "string",
+              "example": "Paid",
+              "description": "Payment Status"
+            },
+            "paidAt": {
+              "type": "string",
+              "example": "2017-08-18",
+              "description": "Paid at date (format: Y-m-d), When payment_status = 'Paid'"
+            },
+            "supplierUid": {
+              "type": "integer",
+              "example": "307",
+              "description": "Supplier UID"
+            },
+            "paymentMethod": {
+              "type": "string",
+              "example": "bank_transfer",
+              "description": "Payment Method"
+            },
+            "paymentDetails": {
+              "type": "object",
+              "properties": {
+                "sender_email": {
+                  "type": "string",
+                  "example": "paypal@youremail.com",
+                  "description": "Sender Email"
+                },
+                "recipient_email": {
+                  "type": "string",
+                  "example": "paypal@myemail.com",
+                  "description": "Recipient Email"
+                },
+                "transaction_id": {
+                  "type": "string",
+                  "example": "xyz123abc",
+                  "description": "Transaction ID"
+                },
+                "card_number": {
+                  "type": "string",
+                  "example": "4324",
+                  "description": "Card Number"
+                },
+                "sepa_creditor_id": {
+                  "type": "string",
+                  "example": "xxyyzz",
+                  "description": "Sepa Creditor ID"
+                },
+                "sepa_mandate_reference": {
+                  "type": "string",
+                  "example": "aabbcc",
+                  "description": "Sepa Mandate Reference"
+                },
+                "purposeOfUsage": {
+                  "type": "string",
+                  "example": "invoice xyz",
+                  "description": "Purpose of Usage"
+                },
+                "iban": {
+                  "type": "string",
+                  "example": "aabbcc",
+                  "description": "IBAN"
+                },
+                "bic": {
+                  "type": "string",
+                  "example": "aabbcc",
+                  "description": "BIC"
+                },
+                "accountHolderName": {
+                  "type": "string",
+                  "example": "My Name",
+                  "description": "Account Holder Name"
+                },
+                "accountNumber": {
+                  "type": "string",
+                  "example": "009922123",
+                  "description": "Account Number"
+                },
+                "bank_name": {
+                  "type": "string",
+                  "example": "Deutsche Bank",
+                  "description": "Bank Name"
+                },
+                "bank_address": {
+                  "type": "string",
+                  "example": "Frankfurt",
+                  "description": "Bank Address"
+                },
+                "sort_code": {
+                  "type": "string",
+                  "example": "XXX0011",
+                  "description": "Sort Code"
+                },
+                "routing_number": {
+                  "type": "string",
+                  "example": "0099882282",
+                  "description": "Routing Number"
+                },
+                "ifsc_code": {
+                  "type": "string",
+                  "example": "XXAA",
+                  "description": "IFSC Code"
+                },
+                "routing_code": {
+                  "type": "string",
+                  "example": "CCVVBB",
+                  "description": "Routing Code"
+                },
+                "cash_discount_date": {
+                  "type": "string",
+                  "example": "2017-08-17",
+                  "description": "Cash Discount Date"
+                },
+                "cash_discount_value": {
+                  "type": "number",
+                  "format": "float",
+                  "example": 25.0,
+                  "description": "Cash Discount Value"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "getDocument": {
+      "type": "object",
+      "properties": {
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "documentUid": {
+              "type": "integer",
+              "example": 28715,
+              "description": "Unique ID"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2017-08-17",
+              "description": "Created At"
+            },
+            "companyUid": {
+              "type": "integer",
+              "example": 307,
+              "description": "Company Unique ID"
+            },
+            "companyName": {
+              "type": "string",
+              "example": "1&1.de",
+              "description": "Company Name"
+            },
+            "orderNumber": {
+              "type": "string",
+              "example": "1235ABCD",
+              "description": "Order Number"
+            },
+            "documentType": {
+              "type": "string",
+              "example": "INCOMING_INVOICE",
+              "description": "Document Type"
+            },
+            "documentNumber": {
+              "type": "string",
+              "example": "receipt-1708171523",
+              "description": "Document Number"
+            },
+            "documentDate": {
+              "type": "string",
+              "example": "2017-08-17",
+              "description": "Document Date"
+            },
+            "documentDueDate": {
+              "type": "string",
+              "example": "2017-08-17",
+              "description": "Document Due Date"
+            },
+            "netAmount": {
+              "type": "number",
+              "format": "float",
+              "example": 9000.0,
+              "description": "Subtotal"
+            },
+            "vat": {
+              "type": "number",
+              "format": "float",
+              "example": 19,
+              "description": "Vat"
+            },
+            "vat_id": {
+              "type": "number",
+              "format": "integer",
+              "example": 123456789,
+              "description": "VAT ID"
+            },
+            "taxRates": {
+              "type": "array",
+              "example": [19, 21],
+              "description": "Tax Rates"
+            },
+            "grossAmount": {
+              "type": "number",
+              "format": "float",
+              "example": 10710.0,
+              "description": "Total"
+            },
+            "currency": {
+              "type": "string",
+              "example": "EUR",
+              "description": "Currency"
+            },
+            "isArchived": {
+              "type": "boolean",
+              "example": true,
+              "description": "Is Archived"
+            },
+            "isLocked": {
+              "type": "boolean",
+              "example": true,
+              "description": "Is Locked"
+            },
+            "isOcrCompleted": {
+              "type": "integer",
+              "example": 0,
+              "description": "Is OCR Completed"
+            },
+            "tags": {
+              "type": "array",
+              "example": ["Infrastructure", "Hardware", "IT"],
+              "description": "Tags"
+            },
+            "note": {
+              "type": "string",
+              "example": "",
+              "description": "Note"
+            },
+            "source": {
+              "type": "string",
+              "example": "Manual",
+              "description": "Source"
+            },
+            "sourceUser": {
+              "type": "string",
+              "example": "John Doe",
+              "description": "Source User"
+            },
+            "filename": {
+              "type": "string",
+              "example": "receipt-1708171523.pdf",
+              "description": "Filename"
+            },
+            "fileSize": {
+              "type": "string",
+              "example": "136.75",
+              "description": "File Size"
+            },
+            "paymentStatus": {
+              "type": "string",
+              "example": "Paid",
+              "description": "Payment Status"
+            },
+
+            "paidAt": {
+              "type": "string",
+              "example": "2017-08-18",
+              "description": "Paid at date (format: Y-m-d), When payment_status = 'Paid'"
+            },
+            "supplierUid": {
+              "type": "integer",
+              "example": "307",
+              "description": "Supplier UID"
+            },
+            "paymentMethod": {
+              "type": "string",
+              "example": "bank_transfer",
+              "description": "Payment Method"
+            },
+            "attachments": {
+              "type": "integer",
+              "example": 10,
+              "description": "Attachments"
+            },
+            "paymentDetails": {
+              "type": "object",
+              "properties": {
+                "sender_email": {
+                  "type": "string",
+                  "example": "paypal@youremail.com",
+                  "description": "Sender Email"
+                },
+                "recipient_email": {
+                  "type": "string",
+                  "example": "paypal@myemail.com",
+                  "description": "Recipient Email"
+                },
+                "transaction_id": {
+                  "type": "string",
+                  "example": "xyz123abc",
+                  "description": "Transaction ID"
+                },
+                "card_number": {
+                  "type": "string",
+                  "example": "3566002020360505",
+                  "description": "Card Number"
+                },
+                "sepa_creditor_id": {
+                  "type": "string",
+                  "example": "DE98ZZZ09999999999",
+                  "description": "Sepa Creditor ID"
+                },
+                "sepa_mandate_reference": {
+                  "type": "string",
+                  "example": "DEAKA999",
+                  "description": "Sepa Mandate Reference"
+                },
+                "purposeOfUsage": {
+                  "type": "string",
+                  "example": "invoice xyz",
+                  "description": "Purpose of Usage"
+                },
+                "iban": {
+                  "type": "string",
+                  "example": "DE89370400440532013000",
+                  "description": "IBAN"
+                },
+                "bic": {
+                  "type": "string",
+                  "example": "COBADEFFXXX",
+                  "description": "BIC"
+                },
+                "accountHolderName": {
+                  "type": "string",
+                  "example": "My Name",
+                  "description": "Account Holder Name"
+                },
+                "accountNumber": {
+                  "type": "string",
+                  "example": "0532013000",
+                  "description": "Account Number"
+                },
+                "bank_name": {
+                  "type": "string",
+                  "example": "Commerzbank",
+                  "description": "Bank Name"
+                },
+                "bank_address": {
+                  "type": "string",
+                  "example": "Koeln",
+                  "description": "Bank Address"
+                },
+                "sort_code": {
+                  "type": "string",
+                  "example": "XXX0011",
+                  "description": "Sort Code"
+                },
+                "routing_number": {
+                  "type": "string",
+                  "example": "0099882282",
+                  "description": "Routing Number"
+                },
+                "ifsc_code": {
+                  "type": "string",
+                  "example": "XXAA",
+                  "description": "IFSC Code"
+                },
+                "routing_code": {
+                  "type": "string",
+                  "example": "CCVVBB",
+                  "description": "Routing Code"
+                },
+                "cash_discount_date": {
+                  "type": "string",
+                  "example": "2017-08-17",
+                  "description": "Cash Discount Date"
+                },
+                "cash_discount_value": {
+                  "type": "number",
+                  "format": "float",
+                  "example": 25.0,
+                  "description": "Cash Discount Value"
+                }
+              }
+            },
+            "lineItems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "quantity": {
+                    "type": "float",
+                    "example": 10.0,
+                    "description": "Quantity"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Asus Laptop, 4 GB RAM",
+                    "description": "Description"
+                  },
+                  "tax_percentage": {
+                    "type": "float",
+                    "example": 19.0,
+                    "description": "Tax Percentage"
+                  },
+                  "tax_amount": {
+                    "type": "float",
+                    "example": 171.0,
+                    "description": "Tax Amount"
+                  },
+                  "unit_net_price": {
+                    "type": "float",
+                    "example": 900.0,
+                    "description": "Unit Net Price"
+                  },
+                  "total_gross": {
+                    "type": "float",
+                    "example": 10710.0,
+                    "description": "Total Gross"
+                  }
+                }
+              }
+            },
+            "transactions": {
+              "type": "object",
+              "properties": {
+                "totalCount": {
+                  "type": "integer",
+                  "example": 10,
+                  "description": "Total Count"
+                },
+                "records": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "transactionUid": {
+                        "type": "integer",
+                        "example": 7,
+                        "description": "Prim Unique ID"
+                      },
+                      "accountUid": {
+                        "type": "integer",
+                        "example": 10,
+                        "description": "Account Unique ID"
+                      },
+                      "bankAccountUid": {
+                        "type": "integer",
+                        "example": 5,
+                        "description": "Bank Account Unique ID"
+                      },
+                      "bookingDate": {
+                        "type": "date",
+                        "example": "2019-05-12",
+                        "description": "Booking Date"
+                      },
+                      "description": {
+                        "type": "string",
+                        "example": "test description",
+                        "description": "Description"
+                      },
+                      "amount": {
+                        "type": "float",
+                        "example": 100.76,
+                        "description": "Amount"
+                      },
+                      "currencyCode": {
+                        "type": "string",
+                        "example": "EUR",
+                        "description": "Currency Code"
+                      },
+                      "accountName": {
+                        "type": "string",
+                        "example": "test bank",
+                        "description": "Account Name"
+                      },
+                      "status": {
+                        "type": "string",
+                        "example": "",
+                        "description": "Status"
+                      },
+                      "creditorId": {
+                        "type": "string",
+                        "example": "DE95ZZZ00000029590",
+                        "description": "Creditor ID"
+                      },
+                      "paymentPartnerName": {
+                        "type": "string",
+                        "example": "SANTANDER CONSUMER BANK AG",
+                        "description": "Payment Partner Name"
+                      },
+                      "tags": {
+                        "type": "array",
+                        "example": ["Hosting", "Software"],
+                        "description": "Tags (Array)"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "workflowDetails": {
+              "type": "object",
+              "properties": {
+                "currentWorkflow": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Standard Workflow",
+                      "description": "Workflow"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "Prim Unique ID"
+                    }
+                  }
+                },
+                "currentWorkflowStep": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Standard Workflow Step 1",
+                      "description": "Workflow Step"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "example": 3,
+                      "description": "Prim Unique ID"
+                    }
+                  }
+                },
+                "isCompleted": {
+                  "type": "boolean",
+                  "example": false,
+                  "description": "Completed"
+                }
+              }
+            }
+          }
+        },
+        "fileContent": {
+          "type": "string",
+          "example": "",
+          "description": "File Content"
+        },
+        "readableContent": {
+          "type": "string",
+          "example": "",
+          "description": "Readable Content"
+        }
+      }
+    },
+    "uploadNewDocument": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "documentUid": {
+          "type": "integer",
+          "example": 28716,
+          "description": "Document Prim Unique ID"
+        }
+      }
+    },
+    "updateDocument": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "documentUid": {
+          "type": "integer",
+          "example": 28716,
+          "description": "Document Prim Unique ID"
+        }
+      }
+    },
+    "deleteDocument": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        }
+      }
+    },
+    "account": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Dev Test",
+          "description": "Name of the user"
+        },
+        "accountId": {
+          "type": "integer",
+          "example": "G-20707-0",
+          "description": "Account ID"
+        },
+        "profileImage": {
+          "type": "url",
+          "example": "http://example.com",
+          "description": "User profile image url"
+        }
+      }
+    },
+    "getCountries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/getCountriesItem"
+      },
+      "example": [
+        {
+          "countryUid": 28715,
+          "name": "Germany",
+          "translations": {
+            "en_us": "Germany",
+            "de_de": "Deutschland"
+          },
+          "countryCode": "DE",
+          "vat": 19,
+          "is_eu": 1
+        },
+        {
+          "countryUid": 28718,
+          "name": "United Kingdom",
+          "translations": {
+            "en_us": "United Kingdom",
+            "de_de": "Großbritannien"
+          },
+          "country_code": "GB",
+          "vat": 20,
+          "is_eu": 1
+        }
+      ]
+    },
+    "getCountriesItem": {
+      "type": "object",
+      "properties": {
+        "countryUid": {
+          "type": "integer",
+          "example": 28715,
+          "description": "Unique ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Germany",
+          "description": "Name"
+        },
+        "translations": {
+          "type": "object",
+          "properties": {
+            "en_us": {
+              "type": "string",
+              "example": "Germany",
+              "description": "en_us"
+            },
+            "de_de": {
+              "type": "string",
+              "example": "Deutschland",
+              "description": "de_de"
+            }
+          }
+        },
+        "countryCode": {
+          "type": "string",
+          "example": "DE",
+          "description": "Country Code"
+        },
+        "vat": {
+          "type": "integer",
+          "example": 19,
+          "description": "Tax Rate"
+        },
+        "is_eu": {
+          "type": "integer",
+          "example": 1,
+          "description": "Is EU"
+        }
+      }
+    },
+    "getCurrencies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/getCurrenciesItem"
+      },
+      "example": [
+        {
+          "name": "Australian dollar",
+          "currencyCode": "AUD"
+        },
+        {
+          "name": "US dollar",
+          "currencyCode": "USD"
+        },
+        {
+          "name": "Euro",
+          "currencyCode": "EUR"
+        }
+      ]
+    },
+    "getCurrenciesItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Australian dollar",
+          "description": "Name"
+        },
+        "currencyCode": {
+          "type": "string",
+          "example": "AUD",
+          "description": "Currency Code"
+        }
+      }
+    },
+    "getTags": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "data": {
+          "type": "array",
+          "description": "Tags",
+          "example": ["Internet", "DSL", "VoIP"]
+        }
+      }
+    },
+    "getVatRates": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "data": {
+          "type": "array",
+          "description": "Vat Array",
+          "example": ["0.00", "7.00", "19.00", "20.00", "21.00"]
+        }
+      }
+    },
+    "addCustomCompany": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "companyUid": {
+          "type": "integer",
+          "example": 28715,
+          "description": "Company ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Server4You",
+          "description": "Name"
+        }
+      }
+    },
+    "updateCustomCompany": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "companyUid": {
+          "type": "integer",
+          "example": 28715,
+          "description": "Company ID"
+        },
+        "name": {
+          "type": "string",
+          "example": "Server4You",
+          "description": "Name"
+        }
+      }
+    },
+    "deleteCustomCompany": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        }
+      }
+    },
+    "listAttachments": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "type": "integer",
+          "example": 10,
+          "description": "Total Count"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "attachmentUid": {
+                "type": "integer",
+                "example": 330250,
+                "description": "Attachment Unique ID"
+              },
+              "fileName": {
+                "type": "string",
+                "example": "test.pdf",
+                "description": "File Name"
+              },
+              "description": {
+                "type": "string",
+                "example": "",
+                "description": "Description"
+              },
+              "attachedAt": {
+                "type": "string",
+                "example": "2017-08-17T12:00",
+                "description": "Attached At"
+              }
+            }
+          }
+        }
+      }
+    },
+    "getAttachment": {
+      "type": "object",
+      "properties": {
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "attachmentUid": {
+              "type": "integer",
+              "example": 28715,
+              "description": "Attachment Unique ID"
+            },
+            "filename": {
+              "type": "string",
+              "example": "2020-04-15.pdf",
+              "description": "File Name"
+            },
+            "description": {
+              "type": "string",
+              "example": "",
+              "description": "description"
+            },
+            "attachedAt": {
+              "type": "string",
+              "example": "1970-01-01T00:00",
+              "description": "Attached At"
+            }
+          }
+        },
+        "fileContent": {
+          "type": "string",
+          "example": "",
+          "description": "File Content"
+        }
+      }
+    },
+    "uploadAttachment": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "success"
+        },
+        "attachmentUid": {
+          "type": "integer",
+          "example": 10,
+          "description": "Attachment Unique ID"
+        }
+      }
+    },
+    "deleteAttachment": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        }
+      }
+    },
+    "listBankAccounts": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "type": "integer",
+          "example": 10,
+          "description": "Total Count"
+        },
+        "maxAmount": {
+          "type": "integer",
+          "example": 0,
+          "description": "Max Amount"
+        },
+        "offset": {
+          "type": "integer",
+          "example": 50,
+          "description": "Offset"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bankAccountUid": {
+                "type": "integer",
+                "example": 7,
+                "description": "Prim Unique ID"
+              },
+              "accountType": {
+                "type": "string",
+                "example": "CUSTOM",
+                "description": "Account Type"
+              },
+              "name": {
+                "type": "string",
+                "example": "test bank",
+                "description": "Name"
+              },
+              "balance": {
+                "type": "float",
+                "example": 320.76,
+                "description": "Balance"
+              },
+              "currencyCode": {
+                "type": "string",
+                "example": "EUR",
+                "description": "Currency Code"
+              }
+            }
+          }
+        }
+      }
+    },
+    "updateBankAccountBalance": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "bankAccountUid": {
+              "type": "integer",
+              "example": 15,
+              "description": "Bank Account ID"
+            },
+            "balance": {
+              "type": "float",
+              "example": 320.76,
+              "description": "Bank Account Balance"
+            },
+            "currencyCode": {
+              "type": "string",
+              "example": "EUR",
+              "description": "Bank Account Currency Code"
+            }
+          }
+        }
+      }
+    },
+    "setTransactionTags": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "transactionUid": {
+              "type": "integer",
+              "example": 15,
+              "description": "Transaction ID"
+            }
+          }
+        }
+      }
+    },
+    "createTransaction": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "transactionUid": {
+              "type": "integer",
+              "example": 28715,
+              "description": "Prim Unique ID"
+            }
+          }
+        }
+      }
+    },
+    "updateTransaction": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "transactionUid": {
+              "type": "integer",
+              "example": 28715,
+              "description": "Prim Unique ID"
+            }
+          }
+        }
+      }
+    },
+    "deleteTransaction": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        }
+      }
+    },
+    "listTransactions": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "type": "integer",
+          "example": 10,
+          "description": "Total Count"
+        },
+        "maxAmount": {
+          "type": "integer",
+          "example": 0,
+          "description": "Max Amount"
+        },
+        "offset": {
+          "type": "integer",
+          "example": 50,
+          "description": "Offset"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "transactionUid": {
+                "type": "integer",
+                "example": 7,
+                "description": "Prim Unique ID"
+              },
+              "accountUid": {
+                "type": "integer",
+                "example": 10,
+                "description": "Account Unique ID"
+              },
+              "bankAccountUid": {
+                "type": "integer",
+                "example": 5,
+                "description": "Bank Account Unique ID"
+              },
+              "bookingDate": {
+                "type": "date",
+                "example": "2019-05-12",
+                "description": "Booking Date"
+              },
+              "description": {
+                "type": "string",
+                "example": "test description",
+                "description": "Description"
+              },
+              "amount": {
+                "type": "float",
+                "example": 100.76,
+                "description": "Amount"
+              },
+              "currencyCode": {
+                "type": "string",
+                "example": "EUR",
+                "description": "Currency Code"
+              },
+              "accountName": {
+                "type": "string",
+                "example": "test bank",
+                "description": "Account Name"
+              },
+              "status": {
+                "type": "string",
+                "example": "",
+                "description": "Status"
+              },
+              "creditorId": {
+                "type": "string",
+                "example": "DE95ZZZ00000029590",
+                "description": "Creditor ID"
+              },
+              "paymentPartnerName": {
+                "type": "string",
+                "example": "SANTANDER CONSUMER BANK AG",
+                "description": "Payment Partner Name"
+              },
+              "tags": {
+                "type": "array",
+                "example": ["Hosting", "Software"],
+                "description": "Tags (Array)"
+              },
+              "ignoreComment": {
+                "description": "Ignore comment",
+                "example": "Ignore comment",
+                "type": "string"
+              },
+              "assignedDocuments": {
+                "type": "array",
+                "example": [28715, 28839],
+                "description": "Assigned documents (Array)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "assignTransaction": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "meta_data": {
+          "type": "object",
+          "properties": {
+            "assignmentUid": {
+              "type": "integer",
+              "example": 28715,
+              "description": "Prim Unique ID"
+            }
+          }
+        }
+      }
+    },
+    "ignoreTransaction": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        }
+      }
+    },
+    "documentsExists": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true,
+          "description": "Success"
+        },
+        "exists": {
+          "type": "boolean",
+          "example": true,
+          "description": "exists"
+        }
+      }
+    },
+    "listPortals": {
+      "type": "object",
+      "properties": {
+        "totalCount": {
+          "type": "integer",
+          "example": 100,
+          "description": "Total Count"
+        },
+        "maxAmount": {
+          "type": "integer",
+          "example": 0,
+          "description": "Max Amount"
+        },
+        "offset": {
+          "type": "integer",
+          "example": 50,
+          "description": "Offset"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "supplier_uid": {
+                "type": "integer",
+                "example": 7,
+                "description": "Unique ID of Portal"
+              },
+              "name": {
+                "type": "string",
+                "example": "Amazon.de",
+                "description": "Name of Portal"
+              }
+            }
+          }
+        }
+      }
+    },
+    "listRelatedAccounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "primUid": {
+            "type": "integer",
+            "example": 307,
+            "description": "Prim ID"
+          },
+          "accountUid": {
+            "type": "integer",
+            "example": 30744,
+            "description": "Account Uid"
+          },
+          "userUid": {
+            "type": "integer",
+            "example": 30777,
+            "description": "User Uid"
+          },
+          "subUser": {
+            "type": "integer",
+            "example": 1,
+            "description": "Sub User"
+          },
+          "connectionUid": {
+            "type": "integer",
+            "example": 1006,
+            "description": "Connection Uid"
+          },
+          "email": {
+            "type": "string",
+            "example": "example@gmail.com",
+            "description": "Email"
+          },
+          "orgName": {
+            "type": "string",
+            "example": "Dev Test",
+            "description": "Org Name"
+          },
+          "accountKey": {
+            "type": "string",
+            "example": "Online-Portal",
+            "description": "Account Key"
+          },
+          "uiServerHost": {
+            "type": "string",
+            "example": "ui.local",
+            "description": "Ui Server Host"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    },
+    "parameters": {
+      "X-Application-Header": {
+        "name": "x-application",
+        "in": "header",
+        "description": "Optional header for providing document source. Set your application name here",
+        "required": false,
+        "example": "Thunderbird,Chrome,Outlook",
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

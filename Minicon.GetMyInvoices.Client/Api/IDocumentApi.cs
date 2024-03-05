@@ -73,6 +73,7 @@ public interface IDocumentApi
 	/// </returns>
 	[Get("/documents")]
 	Task<ListDocuments> DocumentsAsync(
+	//Task<object> DocumentsAsync(
 		int? companyFilter = null,
 		int archivedFilter = 1,
 		string? documentTypeFilter = null,
